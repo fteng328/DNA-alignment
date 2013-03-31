@@ -6,6 +6,7 @@
 
 
 
+
 // given two strings, index all the k-long strings( and their locations, and then use the k-long strings in the other to query this index.
 
 
