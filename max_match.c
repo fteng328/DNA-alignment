@@ -25,7 +25,7 @@ main(){
     
     while (i != M-1){
         while (j!=(k-1)){
-        tempMatrix[i][j] = string2[i+j]; 
+        tempMatrix[i][j] = string1[i+j]; 
         printf("stroring!: i= %d, j=%d\n",i,j);
         j++;
         }
@@ -43,4 +43,16 @@ main(){
     }
     printf("done\n");  
     //printf("done printing the matrix");
+
+
+    //when we find a match with the k-long strings in string2 -> we should extend it in both directions to find max match
+
+/*******
+what happends when we find 2 match with the same length? or multiple match of the same length?
+
+
+*******/
+
+
+    //just need to return the tupple indicating positions of the max match in both sequences in (x1,x2,y1,y2)
 }
