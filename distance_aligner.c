@@ -15,29 +15,34 @@ takein: string1, string2, ranges x1,x2,y1,y2
 ***********/
 
 edit_distance(char * A,char * B,int a,int b, int c, int d){  //this function calculates the edit distance between 2 strings
-//create a MxN matrix where D(i,j) stores the  edit distance between A1....AM to B1.....BN
 
-//initialization
-int distance[M][N];
-distance[i,0] = i;
-distance[0,j] = j;
+    int i,k;
+    //initialization
+    int distance[M][N];    //create a MxN matrix where D(i,j) stores the  edit distance between A1....AM to B1.....BN
+    for(i=0;i<M;i++)    
+        distance[i,0] = 0;
+    for(j=0;j<N;j++)    
+        distance[0,j] = 0;
 
-//recurrence relation
+    //fill in the matrix
 
-   for each i = i...M
-        for each j = 1....N
+    for(i=0;i<M;i++) //each i = i...M
+        for (j= 0;i<N;j++)//each j = 1....N
             distance[i,j] = max (D(i-1,j)-1, D(i,j-1)-1,M(i-1,j-1)-S(A[i],B[j]))
 
 
-        D()
+    //backtracing to get the alignment between 2 strings
+
+
+    
 
 
 
 }
 
 
-
-int S(a,b){
+/***S will return 0 if 2 letters are the same and 1 if they are different**/
+int S(char a,char b){
 if (a == b) return 0;
 else return 1;
 }
