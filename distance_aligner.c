@@ -1,7 +1,7 @@
 ///the distance aligner not only compute the edit distance 
 //but also reconstruct the full set of operations required to transform the strings(and print the alignments)
-#define M 10
-#define N 10
+//#define M 10
+//#define N 10
 #define STOP 0
 #define LEFT 1
 #define UP 2
@@ -9,8 +9,9 @@
 
 #define MATCHSCORE 0
 #define MISMATCHSCORE 1
-
+#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 // this algorithm should take as input not only strings, but also ranges within the two strings in which to do the alignment
 
 /*********
@@ -75,19 +76,27 @@ int max(int a, int b, int c){
 
 }*/
 
-edit_distance(char * A,char * B)//,int a,int b, int c, int d)
+edit_distance(char * X,char * Y, int x1,int x2, int y1, int y2)//,int a,int b, int c, int d)
 {  //this function calculates the edit distance between 2 strings
 
     int i,j,k;
-    int maxDist,minI,minJ;
+    //int maxDist,minI,minJ;
     int del,ins,sub;
-    int dist;
+    //int dist;
     //initialization
 
-	//printf("point3\n");
+    int M ;
+    M= x2-x1+1;
+    int N ;
+    N= y2-y1+1;
+	char *A = malloc(sizeof(char)*(M+1));
+    char *B = malloc(sizeof(char)*(N+1));
+    strncpy(A, &(X[x1]), M);
+    strncpy(B, &(Y[y1]), N);
+    //printf("point3\n");
 
     int distance[M][N];    //create a MxN matrix where D(i,j) stores the  edit distance between A1....AM to B1.....BN
-    int trace[M][N];  // create a matrix to store the pointers for backtracing 
+    /*int trace[M][N];  // create a matrix to store the pointers for backtracing */
 
     char alignA[M+N]; // aligned sequence for A
     char alignB[M+N]; // aligned sequence for B
@@ -95,13 +104,13 @@ edit_distance(char * A,char * B)//,int a,int b, int c, int d)
     for(i=0;i<M;i++)    distance[i][0] = -i;
     for(j=0;j<N;j++)    distance[0][j] = -j;
 	//printf("point5\n");
-    for(i=0;i<M;i++)    trace[i][0] = 0;
-    for(j=0;j<N;j++)    trace[0][j] = 0;
-	printf("point6\n");
+    /*for(i=0;i<M;i++)    trace[i][0] = 0;
+    for(j=0;j<N;j++)    trace[0][j] = 0;*/
+	/*printf("point6\n");
     maxDist=0;
     minI=0;
     minJ=0;
-
+    */
 
 
     //fill in the matrix
@@ -112,7 +121,7 @@ edit_distance(char * A,char * B)//,int a,int b, int c, int d)
             /******/
             //distance[0][0] =
             //dist = 0;
-            trace[i][j] = STOP;
+            //trace[i][j] = STOP;
 
             /********/
 			printf("point6.1:   j= %d, i = %d\n",j,i);    
@@ -130,7 +139,7 @@ edit_distance(char * A,char * B)//,int a,int b, int c, int d)
             printf("what is distance? ---------- %d\n",distance[i][j]);
 
             // store the trace matrix based on the different operations we perform
-            if (distance[i][j] == del)
+            /*if (distance[i][j] == del)
                 trace[i][j] = LEFT;   // LEFT for insertion; DOWN for deletion; DIAG for substitution   
 
             if (distance[i][j] == ins)
@@ -138,18 +147,18 @@ edit_distance(char * A,char * B)//,int a,int b, int c, int d)
               
             if (distance[i][j] == sub)
                 trace[i][j] = DIAG;    //DIAG
-
+            */
       }
     }
 
     /****print the trace graph****/
-    for(i=0;i<M;i++){
+    /*for(i=0;i<M;i++){
         for(j=0;j<N;j++){
 
             printf("%.2i.",abs(trace[i][j]));
         }
         printf("\n");
-    }   
+    } */  
     printf("\n");
     for(i=0;i<M;i++){
         for(j=0;j<N;j++){
@@ -172,36 +181,36 @@ edit_distance(char * A,char * B)//,int a,int b, int c, int d)
     //backtrace(i,j,k);
     while (k<M+N){ 
         if( i>0 && j>0 && (distance[i][j] == distance [i-1][j-1]) ){ // this suggest a match between the two sequence
-             k++;
+            
              alignB[k] = B[j-1];
              alignA[k] = A[i-1]; 
              i=i-1;
              j=j-1;
-             
+              k++;
         }
 
         if(i>0 && j>0 && (distance[i][j] == distance[i-1][j-1] -1) ){ //this suggest a mismatch
-             k++;
+             
              alignB[k]= B[j-1];
              alignA[k]= A[i-1];
              i=i-1;
              j=j-1;
-             
+             k++;
         }
         if(j>0 && (distance[i][j] == distance[i][j-1] -1) ) {  // this suggest a insertion
-             k++;
+             
              alignA[k] = '-';
              alignB[k] = B[j-1];
              j=j-1 ;
-             
+              k++;
 
         }
         if(i>0 && (distance[i][j] == distance[i-1][j] -1)){    // this suggest a deletion
-             k++;
+             
              alignA[k] = A[i-1];
              alignB[k] = '-';
              i=i-1 ;
-             
+              k++;
         }
         if(i==0 && j ==0)
             break;
@@ -211,9 +220,11 @@ edit_distance(char * A,char * B)//,int a,int b, int c, int d)
     /* print in reverse order */
     printf("printing!\n");
 
-    for(i=k;i>=0;i--) printf("%c",alignB[i]);
+    for(i=k-1;i>=0;i--) printf("%c",alignB[i]);
+    //printf("%s",alignB);
     printf("\n");
-    for(i=k;i>=0;i--) printf("%c",alignA[i]);
+    //printf("%s",alignA);
+    for(i=k-1;i>=0;i--) printf("%c",alignA[i]);
     printf("\n");
 
 
@@ -224,14 +235,14 @@ edit_distance(char * A,char * B)//,int a,int b, int c, int d)
 
 main(){
 	
-    char Y[N] = "ATCGGTATC";
-    char X[M] = "ATGAATCGT";
+    //char Y[50] = "ATCGGTATC";
+    //char X[50] = "ATGAATCGT";
 
-    //char Y[N] = "TRACEBACK";
-	//char X[M] = "BACKTRACK";
+    char Y[50] = "TRACEBACK";
+	char X[50] = "BACKTRACK";
 	printf("point1");
 	printf("point2\n");
-	edit_distance(X,Y);
+	edit_distance(X,Y,0,9,0,9);
 	printf("done");
 }
 
