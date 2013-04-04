@@ -57,30 +57,6 @@ extendleft(int a,int b){
 }
 
 
-void append(int a,int b, int c, int d)
-{
-    struct node *temp,*right;
-    printf("im heser\n");
-    temp= (struct node *)malloc(sizeof(struct node));
-    printf("im 1\n");
-    temp->x1=a;
-    temp->x2=b;
-printf("im 2\n");
-    temp->y1=c;
-printf("im 5\n");
-    temp->y2=d;
-    right=(struct node *)head;
-printf("im 7\n");
-    while(right->next != NULL)
-printf("im 7.6\n");
-    right=right->next;
-printf("im 7.7\n");
-    right->next =temp;
-printf("im 8\n");
-    right=temp;
-    right->next=NULL;
-}
-    
 void display(/*struct node *r*/)
 {
     struct node * r;
@@ -184,6 +160,7 @@ main(){
             }
         }
     }
+
     printf("displaying L-list");
     display();
 }
