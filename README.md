@@ -1,21 +1,23 @@
-DNA-alignment
+
+/******README for the sequence matching project*********/
+
+DNA-alignment - fastmatch
 =============
+Implementing a fast DNA-aligment algorithm
 
-implementing a fast DNA-aligment algorithm
-
-
-
-
-
-/*README for the sequence matching project*/
 Owen Tao 996826564
 Fei Teng 996842751
 
-note: we used 1 slip day for this progarmming assignment
+please note: we used 1 slip day for this programming assignment
+no bonus parts were achevied
+/********************************************************/
 
 PartA:(can run seperately on PartA.c)
 
-The program saves the kmers from 1 sequence and saves them in a (M-k+1)*k matrix. (This takes quadratic time and space for large k.) Then each kmer is taken and searched up in the other sequence and any match exact match in the kmer is detected. (O(n^2) running time) Upon detection of a match, the kmer is furthermore extented to both to the right or left, forming possibly longer-than-k kmer matches. The starting point and end points of these kmer matches on both sequences are stored in a linked list for part B.
+The program calculates the kmers from 1st sequence and saves them in a (M-k+1)*k matrix. (This takes up to O(M*k) and O(M*k)space for large k.) Then each kmer is taken and searched up in the other sequence and any match exact match in the kmer is detected. (this will take O(n^2) running time, where n is upper bound length of both sequences) Upon detection of a match, the kmer is furthermore extented to both to the right or left, forming possibly longer-than-k kmer matches.(This is linear time) The starting point and end points of these kmer matches on both sequences are stored in a linked list for part B. 
+
+Overall running time: (O(n^2))
+Overall space : O(n*k)
 
 
 PartB:(can run seperately on partb.c including avl.c avl.h)
@@ -31,4 +33,13 @@ This dominates the O(n) running time of the sorting algorithm (O(3n+10) of count
 Lastly, the AVL tree library used can be found here: https://github.com/haiwen/seafile/blob/master/common/avl
 Acknowledgements to Michael H Buselli and Wessel Dankers for the AVL library.
 
-PartC:
+PartC:(can run sepreately on partC.c)
+
+We compute the edit distance and store it in a M x N matrix.  The algorithm to calculate the edit distance stricly follows the assignment handout ie. max of distance score when we assign a penalty score of -1 to mismatch and 0 to match. ( This takes MxN space and running time is 3MxN, thus quadratic running time)
+
+For backtracing, we can deduce what operation was taken at each of the indices of the original sequences by just looking at the distance matrix and modify our output sequence accordingly. This takes 2(N+M) memory for the new allocated string to store the aligned sequences and take O(n^2) time to look in every element in the distance matrix (this could be inproved such that we only look at the elements that are being pointed by the last element in the backtrace list)
+
+Overall running time: (O(n^2))
+Overall space : O(n^2)
+
+
