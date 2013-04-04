@@ -12,7 +12,7 @@ struct node{
     int x1;
     int x2;
     int y1;
-    int y2;    
+    int y2;
     struct node *next;
 
 }*head;
@@ -23,7 +23,7 @@ static int end1=0;
 static int start2=0;
 static int end2=0;
 
-static char string2[N]="123abcdef0";//[1,2,3,4,5,6,7,8,9];
+static char string2[N]="abc0abcdef";//[0,1,2,3,4,5,6,7,8,9];
 static char string1[M]="abcdefghij";//=[11,12,13,123,4411,4,43,2,4,2,];
 
 
@@ -81,8 +81,9 @@ printf("im 8\n");
     right->next=NULL;
 }
     
-void  display(struct node *r)
+void display(/*struct node *r*/)
 {
+    struct node * r;
     r=head;
     if(r==NULL)
     {
@@ -125,16 +126,16 @@ void add( int a,int b, int c, int d )
 
 main(){
     printf("start value is",start1,start2,end1,end2);
-    struct node *n;
-    char tempMatrix [M][k];
+   // struct node *n;
+    char tempMatrix [M-k+1][k];
     int i=0;
     int j=0;int s =0;
     int flag = 0;
     
-    printf("starting the loop\n");
-    for (i=0;i<M-k;i++){
+   // printf("starting the loop\n");
+    for (i=0;i<M-k+1;i++){
         
-        for(j=0;j<=k-1;j++){
+        for(j=0;j<k;j++){
             
             tempMatrix[i][j] = string1[i+j];
             
@@ -142,70 +143,47 @@ main(){
         
         }
         
-        printf("done inner loop\n");
+       // printf("done inner loop\n");
     }
 
-
    
-   
-    //printf("done filling the matrix");
-    for (i=0;i<M-k;i++){
-        for (j=0;j<=k-1;j++)
+    for (i=0;i<M-k+1;i++){
+        for (j=0;j<k;j++)
             printf("%c",tempMatrix[i][j]);
         printf("\n");
     }
-    printf("done\n"); 
-    
-    //printf("done printing the matrix");
     
     //extract a kmer from string1 and check with the k length subsquences in string2
 
-    for(s=6;s<N-k;s++){
-    printf("point1: s=%d,i=%d,j=%d,k=%d\n",s,i,j,k);
-        for(i=0;i<N-k;i++){
-    printf("point12: s=%d,i=%d,j=%d,k=%d\n",s,i,j,k);
+    for(s=0;s<N-k+1;s++){
+        for(i=0;i<N-k+1;i++){
             flag =0;
             for(j=0;j<=k-1;j++){
-    printf("point123: s=%d,i=%d,j=%d,k=%d\n",s,i,j,k);
                 if (tempMatrix[i][j] == string2[s+j]){
-    printf("looking at %c",string2[s+j]);
-    printf("point1234: s=%d,i=%d,j=%d,k=%d\n",s,i,j,k);
+  //  printf("looking at %c",string2[s+j]);
                     flag = flag+1;
                     
-                    if (flag == k-1){ // found a match
+                    if (flag == k){ // found a match
 
-                        printf("found a match!!\n");
-                        printf("s is %i\n",s);
                         start2 = s;
                         end2 = s+k-1;
                         start1 = i;
                         end1 = i+k-1;
-                        extendleft(start1,start2);  //when we find a match with the k-long strings in string2 -> we should extend it in both directions to find max match
+                        extendleft(start1,start2); //when we find a match with the k-long strings in string2 -> we should extend it in both directions to find max match
                         extendright(end1,end2);
 
                         //the extendleft and extendright should call recursively until no extension possible
 
                         //now we want to store this tuple (x1,x2,y1,y2) in a linked list
-                        printf("final value is x1:%d,x2:%d,y1:%d,y2:%d\n",start1,end1,start2,end2);
 
-                        add(start1,end1,start2,end2);                        //storing each tuple in a linked-list
+                        add(start1,end1,start2,end2); //storing each tuple in a linked-list
                     }
                     //else break;
                 }
                 
-            }        
+            }
         }
     }
-
     printf("displaying L-list");
-    display(n);
+    display();
 }
-
-    
-
-/*******
-what happends when we find 2 match with the same length? or multiple match of the same length?
-
-store all of them
-*******/
-
