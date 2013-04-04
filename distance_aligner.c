@@ -37,8 +37,12 @@ int max(int a, int b, int c){
             return b;
 
 
+<<<<<<< HEAD
+        
+=======
 }
 
+>>>>>>> 697372535e83d3088d53ef4ca662c55f634ac40c
 
 edit_distance(char * A,char * B)//,int a,int b, int c, int d)
 {  //this function calculates the edit distance between 2 strings
