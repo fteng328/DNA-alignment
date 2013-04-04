@@ -60,7 +60,7 @@ edit_distance(char * A,char * B)//,int a,int b, int c, int d)
 
             if (distance[i,j] = ins)
                 trace(i,j)= (DOWN);
-              "gatggtccgatcaatctacgatcggggctctaaatatatatatatacgctacgatcg"
+              
             if (distance[i,j] = sub)
                 trace(i,j)= (DIAG);
 
@@ -83,7 +83,7 @@ edit_distance(char * A,char * B)//,int a,int b, int c, int d)
 
     while(i>minI) {
     alignB[k]='-';
-    alignA[k]=A[i-1];"gatggtccgatcaatctacgatcggggctctaaatatatatatatacgctacgatcg"
+    alignA[k]=A[i-1];
     i--;
     k++;
     }
@@ -173,7 +173,7 @@ int max(int a, int b, int c){
 main(){
   char Y[N-1] = "gatggtccgatcaatctacgatcggggctctaaatatatatatatacgctacgatcg";
   char X[M-1] = "gatggtccgatcaatctacgatcggaactctatatatagatatctacgctacgatcg";
-edit_distance(X,Y,)
+edit_distance(X,Y);
 
 }
 
