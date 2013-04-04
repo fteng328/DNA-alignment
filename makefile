@@ -1,2 +1,2 @@
 all:
-  gcc avl.c partb.c -o partb.o
+  gcc partA.c partC.c avl.c partb.c -o fastmatch.o
